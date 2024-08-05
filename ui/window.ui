@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <requires lib='gtk' version='4.10' />
+  <template class='GraosAppWin' parent='GtkApplicationWindow'>
+    <property name='default-width'>800</property>
+    <property name='default-height'>600</property>
+    <property name='hide-on-close'>False</property>
+    <property name='titlebar'>
+      <object class='GtkHeaderBar' id='header'>
+        <child type='start'>
+          <object class='GtkMenuButton' id='menu_btn'>
+            <property name='label'>Menu</property>
+            <property name='has-frame'>True</property>
+            <property name='direction'>GTK_ARROW_DOWN</property>
+          </object>
+        </child>
+        <child type='title'>
+          <object class='GtkLabel' id='header_label' />
+        </child>
+        <child type='end'>
+          <object class='GtkButton' id='salvar_btn'>
+            <property name='label'>Salvar</property>
+            <property name='sensitive'>False</property>
+          </object>
+        </child>
+      </object>
+    </property>
+    <property name='child'>
+      <object class='GtkStack' id='view_area'>
+        <property name='margin-top'>20</property>
+        <property name='margin-bottom'>10</property>
+        <property name='margin-start'>10</property>
+        <property name='margin-end'>10</property>
+        <property name='vexpand'>True</property>
+        <property name='hexpand'>True</property>
+      </object>
+    </property>
+  </template>
+</interface>

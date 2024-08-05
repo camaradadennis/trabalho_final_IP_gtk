@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <requires lib='gtk' version='4.10' />
+  <template class='RelatorioMensal' parent='GtkBox'>
+    <property name='orientation'>GTK_ORIENTATION_VERTICAL</property>
+    <property name='spacing'>5</property>
+    <child>
+      <object class='GtkFrame' id='header_mes'>
+        <property name='label'>TODOS</property>
+        <property name='label-xalign'>0.5</property>
+        <property name='vexpand'>False</property>
+        <property name='hexpand'>False</property>
+        <property name='halign'>GTK_ALIGN_CENTER</property>
+        <property name='width-request'>200</property>
+        <property name='child'>
+          <object class='GtkScale' id='seletor_mes'>
+            <property name='draw-value'>True</property>
+            <property name='adjustment'>
+              <object class='GtkAdjustment'>
+                <property name='upper'>12.0</property>
+                <property name='lower'>0.0</property>
+                <property name='step-increment'>1.0</property>
+                <property name='page-increment'>12.0</property>
+                <property name='page-size'>0.0</property>
+              </object>
+            </property>
+            <property name='digits'>0</property>
+            <property name='has-origin'>True</property>
+            <property name='round-digits'>0</property>
+          </object>
+        </property>
+      </object>
+    </child>
+
+    <child>
+      <object class='GtkScrolledWindow'>
+        <property name='child'>
+          <object class='GtkColumnView' id='columnview'>
+            <property name='vexpand'>True</property>
+            <property name='hexpand'>True</property>
+            <property name='show-column-separators'>True</property>
+            <property name='show-row-separators'>True</property>
+            <property name='model'>
+              <object class='GtkNoSelection'>
+                <property name='model'>
+                  <object class='GtkSortListModel' id='sort_model'>
+                    <property name='model'>
+                      <object class='GtkFilterListModel'>
+                        <property name='model'>
+                          <object class='GListStore' id='data_model'>
+                            <property name='item-type'>ItemRelatorioMensal</property>
+                          </object>
+                        </property>
+                        <property name='filter'>
+                          <object class='GtkStringFilter' id='string_filter'>
+                            <property name='expression'>
+                              <lookup name='mes' type='ItemRelatorioMensal' />
+                            </property>
+                            <property name='ignore-case'>True</property>
+                          </object>
+                        </property>
+                      </object>
+                    </property>
+                    <binding name='sorter'>
+                      <lookup name='sorter'>columnview</lookup>
+                    </binding>
+                  </object>
+                </property>
+              </object>
+            </property>
+
+            <!-- Origem -->
+            <child>
+              <object class='GtkColumnViewColumn' id='column_orig'>
+                <property name='title'>Origem</property>
+                <property name='expand'>True</property>
+                <property name='factory'>
+                  <object class='GtkBuilderListItemFactory'>
+                    <property name='bytes'><![CDATA[
+                      <interface>
+                        <template class='GtkListItem'>
+                          <property name='child'>
+                            <object class='GtkLabel'>
+                              <binding name='label'>
+                                <lookup name='origem' type='ItemRelatorioMensal'>
+                                  <lookup name='item'>GtkListItem</lookup>
+                                </lookup>
+                              </binding>
+                            </object>
+                          </property>
+                        </template>
+                      </interface>
+                    ]]></property>
+                  </object>
+                </property>
+                <property name='sorter'>
+                  <object class='GtkNumericSorter'>
+                    <property name='expression'>
+                      <lookup name='origem' type='ItemRelatorioMensal' />
+                    </property>
+                  </object>
+                </property>
+              </object>
+            </child>
+
+            <!-- Mês -->
+            <child>
+              <object class='GtkColumnViewColumn' id='column_mes'>
+                <property name='title'>Mês</property>
+                <property name='expand'>True</property>
+                <property name='factory'>
+                  <object class='GtkBuilderListItemFactory'>
+                    <property name='bytes'><![CDATA[
+                      <interface>
+                        <template class='GtkListItem'>
+                          <property name='child'>
+                            <object class='GtkLabel'>
+                              <binding name='label'>
+                                <lookup name='mes' type='ItemRelatorioMensal'>
+                                  <lookup name='item'>GtkListItem</lookup>
+                                </lookup>
+                              </binding>
+                            </object>
+                          </property>
+                        </template>
+                      </interface>
+                    ]]></property>
+                  </object>
+                </property>
+                <property name='sorter'>
+                  <object class='GtkStringSorter'>
+                    <property name='expression'>
+                      <lookup name='mes' type='ItemRelatorioMensal' />
+                    </property>
+                  </object>
+                </property>
+              </object>
+            </child>
+
+            <!-- Cargas -->
+            <child>
+              <object class='GtkColumnViewColumn'>
+                <property name='title'>Cargas</property>
+                <property name='expand'>True</property>
+                <property name='factory'>
+                  <object class='GtkBuilderListItemFactory'>
+                    <property name='bytes'><![CDATA[
+                      <interface>
+                        <template class='GtkListItem'>
+                          <property name='child'>
+                            <object class='GtkLabel'>
+                              <binding name='label'>
+                                <lookup name='cargas' type='ItemRelatorioMensal'>
+                                  <lookup name='item'>GtkListItem</lookup>
+                                </lookup>
+                              </binding>
+                            </object>
+                          </property>
+                        </template>
+                      </interface>
+                    ]]></property>
+                  </object>
+                </property>
+              </object>
+            </child>
+
+            <!-- GU Faixa 1 -->
+            <child>
+              <object class='GtkColumnViewColumn'>
+                <property name='title'>GU Faixa 1</property>
+                <property name='expand'>True</property>
+                <property name='factory'>
+                  <object class='GtkBuilderListItemFactory'>
+                    <property name='bytes'><![CDATA[
+                      <interface>
+                        <template class='GtkListItem'>
+                          <property name='child'>
+                            <object class='GtkLabel'>
+                              <binding name='label'>
+                                <lookup name='gu-faixa-1' type='ItemRelatorioMensal'>
+                                  <lookup name='item'>GtkListItem</lookup>
+                                </lookup>
+                              </binding>
+                            </object>
+                          </property>
+                        </template>
+                      </interface>
+                    ]]></property>
+                  </object>
+                </property>
+              </object>
+            </child>
+
+            <!-- GU Faixa 2 -->
+            <child>
+              <object class='GtkColumnViewColumn'>
+                <property name='title'>GU Faixa 2</property>
+                <property name='expand'>True</property>
+                <property name='factory'>
+                  <object class='GtkBuilderListItemFactory'>
+                    <property name='bytes'><![CDATA[
+                      <interface>
+                        <template class='GtkListItem'>
+                          <property name='child'>
+                            <object class='GtkLabel'>
+                              <binding name='label'>
+                                <lookup name='gu-faixa-2' type='ItemRelatorioMensal'>
+                                  <lookup name='item'>GtkListItem</lookup>
+                                </lookup>
+                              </binding>
+                            </object>
+                          </property>
+                        </template>
+                      </interface>
+                    ]]></property>
+                  </object>
+                </property>
+              </object>
+            </child>
+
+            <!-- GU Faixa 3 -->
+            <child>
+              <object class='GtkColumnViewColumn'>
+                <property name='title'>GU Faixa 3</property>
+                <property name='expand'>True</property>
+                <property name='factory'>
+                  <object class='GtkBuilderListItemFactory'>
+                    <property name='bytes'><![CDATA[
+                      <interface>
+                        <template class='GtkListItem'>
+                          <property name='child'>
+                            <object class='GtkLabel'>
+                              <binding name='label'>
+                                <lookup name='gu-faixa-3' type='ItemRelatorioMensal'>
+                                  <lookup name='item'>GtkListItem</lookup>
+                                </lookup>
+                              </binding>
+                            </object>
+                          </property>
+                        </template>
+                      </interface>
+                    ]]></property>
+                  </object>
+                </property>
+              </object>
+            </child>
+
+            <!-- GU Extra -->
+            <child>
+              <object class='GtkColumnViewColumn'>
+                <property name='title'>GU Extra</property>
+                <property name='expand'>True</property>
+                <property name='factory'>
+                  <object class='GtkBuilderListItemFactory'>
+                    <property name='bytes'><![CDATA[
+                      <interface>
+                        <template class='GtkListItem'>
+                          <property name='child'>
+                            <object class='GtkLabel'>
+                              <binding name='label'>
+                                <lookup name='gu-extra' type='ItemRelatorioMensal'>
+                                  <lookup name='item'>GtkListItem</lookup>
+                                </lookup>
+                              </binding>
+                            </object>
+                          </property>
+                        </template>
+                      </interface>
+                    ]]></property>
+                  </object>
+                </property>
+              </object>
+            </child>
+
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

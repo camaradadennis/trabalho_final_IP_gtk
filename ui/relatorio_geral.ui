@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <requires lib='gtk' version='4.10' />
+  <template class='RelatorioGeral' parent='GtkBox'>
+    <property name='orientation'>GTK_ORIENTATION_VERTICAL</property>
+    <property name='spacing'>5</property>
+    <child>
+      <object class='GtkScrolledWindow'>
+        <property name='vexpand'>True</property>
+        <property name='hexpand'>True</property>
+        <property name='child'>
+        <object class='GtkColumnView' id='columnview'>
+          <property name='show-column-separators'>True</property>
+          <property name='show-row-separators'>True</property>
+          <property name='model'>
+            <object class='GtkNoSelection'>
+              <property name='model'>
+                <object class='GtkSortListModel'>
+                  <property name='model'>
+                    <object class='GListStore' id='data_model'>
+                      <property name='item-type'>ItemRelatorioGeral</property>
+                    </object>
+                  </property>
+                  <binding name='sorter'>
+                    <lookup name='sorter'>columnview</lookup>
+                  </binding>
+                </object>
+              </property>
+            </object>
+          </property>
+
+          <!-- Origem -->
+          <child>
+            <object class='GtkColumnViewColumn' id='column_origem'>
+              <property name='title'>Origem</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='origem' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+              <property name='sorter'>
+                <object class='GtkNumericSorter'>
+                  <property name='expression'>
+                    <lookup name='origem' type='ItemRelatorioGeral' />
+                  </property>
+                </object>
+              </property>
+            </object>
+          </child>
+
+          <!-- Peso Total -->
+          <child>
+            <object class='GtkColumnViewColumn' id='column_peso_total'>
+              <property name='title'>Peso Total</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='peso-total' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+              <property name='sorter'>
+                <object class='GtkNumericSorter'>
+                  <property name='expression'>
+                    <lookup name='peso-total' type='ItemRelatorioGeral' />
+                  </property>
+                </object>
+              </property>
+            </object>
+          </child>
+
+          <!-- Faixa 1 -->
+          <child>
+            <object class='GtkColumnViewColumn' id='column_fx1_peso_limpo'>
+              <property name='title'>Peso Limpo (Faixa 1)</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='fx1-peso-limpo' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+              <property name='sorter'>
+                <object class='GtkNumericSorter'>
+                  <property name='expression'>
+                    <lookup name='fx1-peso-limpo' type='ItemRelatorioGeral' />
+                  </property>
+                </object>
+              </property>
+            </object>
+          </child>
+          <child>
+            <object class='GtkColumnViewColumn' id='column_fx1_tp_trans'>
+              <property name='title'>% Transgênico (Faixa 1)</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='fx1-tp-trans' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+            </object>
+          </child>
+          <child>
+            <object class='GtkColumnViewColumn' id='column_fx1_tp_ntrans'>
+              <property name='title'>% Não Transgênico (Faixa 1)</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='fx1-tp-ntrans' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+            </object>
+          </child>
+
+          <!-- Faixa 2 -->
+          <child>
+            <object class='GtkColumnViewColumn' id='column_fx2_peso_limpo'>
+              <property name='title'>Peso Limpo (Faixa 2)</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='fx2-peso-limpo' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+              <property name='sorter'>
+                <object class='GtkNumericSorter'>
+                  <property name='expression'>
+                    <lookup name='fx2-peso-limpo' type='ItemRelatorioGeral' />
+                  </property>
+                </object>
+              </property>
+            </object>
+          </child>
+          <child>
+            <object class='GtkColumnViewColumn' id='column_fx2_tp_trans'>
+              <property name='title'>% Transgênico (Faixa 2)</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='fx2-tp-trans' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+              <property name='sorter'>
+                <object class='GtkNumericSorter'>
+                  <property name='expression'>
+                    <lookup name='fx2-tp-trans' type='ItemRelatorioGeral' />
+                  </property>
+                </object>
+              </property>
+            </object>
+          </child>
+          <child>
+            <object class='GtkColumnViewColumn' id='column_fx2_tp_ntrans'>
+              <property name='title'>% Não Transgênico (Faixa 2)</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='fx2-tp-ntrans' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+            </object>
+          </child>
+
+          <!-- Faixa 3 -->
+          <child>
+            <object class='GtkColumnViewColumn' id='column_fx3_peso_limpo'>
+              <property name='title'>Peso Limpo (Faixa 3)</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='fx3-peso-limpo' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+              <property name='sorter'>
+                <object class='GtkNumericSorter'>
+                  <property name='expression'>
+                    <lookup name='fx3-peso-limpo' type='ItemRelatorioGeral' />
+                  </property>
+                </object>
+              </property>
+            </object>
+          </child>
+          <child>
+            <object class='GtkColumnViewColumn' id='column_fx3_tp_trans'>
+              <property name='title'>% Transgênico (Faixa 3)</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='fx3-tp-trans' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+            </object>
+          </child>
+          <child>
+            <object class='GtkColumnViewColumn' id='column_fx3_tp_ntrans'>
+              <property name='title'>% Não Transgênico (Faixa 3)</property>
+              <property name='factory'>
+                <object class='GtkBuilderListItemFactory'>
+                  <property name='bytes'><![CDATA[
+                    <interface>
+                      <template class='GtkListItem'>
+                        <property name='child'>
+                          <object class='GtkLabel'>
+                            <binding name='label'>
+                              <lookup name='fx3-tp-ntrans' type='ItemRelatorioGeral'>
+                                <lookup name='item'>GtkListItem</lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </property>
+                      </template>
+                    </interface>
+                  ]]></property>
+                </object>
+              </property>
+            </object>
+          </child>
+        </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

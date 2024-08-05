@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <requires lib='gtk' version='4.10' />
+  <template class='NovoCarregamento' parent='GtkBox'>
+    <child>
+      <object class='GtkScrolledWindow'>
+        <property name='vexpand'>True</property>
+        <property name='hexpand'>True</property>
+        <property name='child'>
+          <object class='GtkTextView'>
+            <property name='justification'>GTK_JUSTIFY_CENTER</property>
+            <property name='editable'>False</property>
+            <property name='cursor-visible'>False</property>
+            <property name='top-margin'>10</property>
+            <property name='left-margin'>5</property>
+            <property name='right-margin'>5</property>
+            <property name='bottom-margin'>5</property>
+            <property name='buffer'>
+              <object class='GtkTextBuffer' id='text_area'>
+                <property name='text'>
+                  Bem vindo ao programa de catálogo de grãos da COOPERATIVA AGRÍCOLA GRÃO DO VALE!
+
+
+                  Para inserir um novo carregamento no catálogo, vá em menu->Novo Carregamento
+                  e escolha o arquivo com os dados do novo carregamento.
+
+                  Se os dados estiverem corretos, salve o novo carregamento clicando
+                  em "Salvar". Se não salvar, você terá que abrir o arquivo novamente.
+                  Não é possível carregar vários arquivos de novos carregamentos e salvá-los
+                  todos de uma vez.
+
+                  As demais funções do menu exibem relatórios acerca dos carregamentos
+                  salvos no catálogo.
+                </property>
+              </object>
+            </property>
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

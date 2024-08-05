@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <menu id='menu'>
+    <section>
+      <item>
+        <attribute name='label'>Novo Carregamento</attribute>
+        <attribute name='action'>win.novo</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label'>Resumo Quantitativo Mensal</attribute>
+        <attribute name='action'>win.rel_mensal</attribute>
+      </item>
+      <item>
+        <attribute name='label'>Resumo Geral</attribute>
+        <attribute name='action'>win.rel_geral</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label'>Sobre</attribute>
+        <attribute name='action'>win.sobre</attribute>
+      </item>
+      <item>
+        <attribute name='label'>Sair</attribute>
+        <attribute name='action'>app.quit</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

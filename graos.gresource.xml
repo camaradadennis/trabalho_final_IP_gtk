@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<gresources>
+    <gresource prefix='/si_ip/grupo8/graos'>
+        <file preprocess='xml-stripblanks'>window.ui</file>
+        <file preprocess='xml-stripblanks'>menu.ui</file>
+        <file preprocess='xml-stripblanks'>relatorio_geral.ui</file>
+        <file preprocess='xml-stripblanks'>relatorio_mensal.ui</file>
+        <file preprocess='xml-stripblanks'>novo_carregamento.ui</file>
+    </gresource>
+</gresources>
