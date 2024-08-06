@@ -122,7 +122,6 @@ set_text_buffer_from_error(NovoCarregamento *self, const char *file_contents, si
 static float
 PercentualUmidade(const Amostra amostras[], int n)
 {
-
     float somaNumerador = 0.0;
     float somaDivisor = 0.0;
 
@@ -154,7 +153,7 @@ PercentualImpurezas(const Amostra amostras[], int n)
     }
 
     if (somaPeso != 0)
-        return somaImpurezas / somaPeso;
+        return 100 * somaImpurezas / somaPeso;
     else
         return -1;
 }
