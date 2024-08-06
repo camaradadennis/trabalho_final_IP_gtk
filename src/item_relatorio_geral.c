@@ -44,21 +44,62 @@ item_relatorio_geral_get_origem(const ItemRelatorioGeral *self)
     return self->origem;
 }
 
+/* item_relatorio_geral_add()
+ * Esta função soma os valores já armazenados em `self` com os valores de `other`
+ * e emite um sinal "notify" quando algum dos valores de fato mudou.
+ * O sinal é importante por que é capturado pela columnviewcolumn, que atualiza
+ * o valor daquela propriedade na tabela.
+ */
 void
 item_relatorio_geral_add(ItemRelatorioGeral *self, const ItemRelatorioGeral *other)
 {
     g_return_if_fail(self->origem == other->origem);
 
+    GObject *gobj = G_OBJECT(self);
+
+    if (!other->peso_total)
+        return; // se o carregamento não tem peso, não faz sentido continuar.
+
     self->peso_total += other->peso_total;
-    self->fx1_peso_limpo += other->fx1_peso_limpo;
-    self->fx1_tp_trans += other->fx1_tp_trans;
-    self->fx1_tp_ntrans += other->fx1_tp_ntrans;
-    self->fx2_peso_limpo += other->fx2_peso_limpo;
-    self->fx2_tp_trans += other->fx2_tp_trans;
-    self->fx2_tp_ntrans += other->fx2_tp_ntrans;
-    self->fx3_peso_limpo += other->fx3_peso_limpo;
-    self->fx3_tp_trans += other->fx3_tp_trans;
-    self->fx3_tp_ntrans += other->fx3_tp_ntrans;
+    g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[PESO_TOTAL]);
+
+    // `other` codidifica os valores de um único carregamento,
+    // por isso, ele pode estar nas faixas 1, 2 ou 3. Nunca em mais de uma.
+    // Nós testamos o peso limpo em cada faixa, para seguir a convenção
+    // de só emitir um sinal para as propriedades que de fato mudaram.
+    // Note que as propriedades TP_TRANS e TP_NTRANS são, na verdade, percentuais.
+    // Assim, elas vão mudar independentemente de a carga recebida ser transgênica
+    // ou não.
+    if (other->fx1_peso_limpo)
+    {
+        self->fx1_peso_limpo += other->fx1_peso_limpo;
+        self->fx1_tp_trans += other->fx1_tp_trans;
+        self->fx1_tp_ntrans += other->fx1_tp_ntrans;
+
+        g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[FX1_PESO_LIMPO]);
+        g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[FX1_TP_TRANS]);
+        g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[FX1_TP_NTRANS]);
+    }
+    else if (other->fx2_peso_limpo)
+    {
+        self->fx2_peso_limpo += other->fx2_peso_limpo;
+        self->fx2_tp_trans += other->fx2_tp_trans;
+        self->fx2_tp_ntrans += other->fx2_tp_ntrans;
+
+        g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[FX2_PESO_LIMPO]);
+        g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[FX2_TP_TRANS]);
+        g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[FX2_TP_NTRANS]);
+    }
+    else if (other->fx3_peso_limpo)
+    {
+        self->fx3_peso_limpo += other->fx3_peso_limpo;
+        self->fx3_tp_trans += other->fx3_tp_trans;
+        self->fx3_tp_ntrans += other->fx3_tp_ntrans;
+
+        g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[FX3_PESO_LIMPO]);
+        g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[FX3_TP_TRANS]);
+        g_object_notify_by_pspec(gobj, item_relatorio_geral_properties[FX3_TP_NTRANS]);
+    }
 }
 
 static void
@@ -186,7 +227,7 @@ item_relatorio_geral_class_init(ItemRelatorioGeralClass *cls)
         item_relatorio_geral_properties[prop] =
             g_param_spec_float(
                 prop_names[prop], NULL, NULL, 0, G_MAXFLOAT, 0,
-                G_PARAM_READABLE | G_PARAM_STATIC_STRINGS
+                G_PARAM_READABLE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY
             );
     }
 

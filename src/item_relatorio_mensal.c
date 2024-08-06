@@ -56,15 +56,45 @@ item_relatorio_mensal_get_mes_n(const ItemRelatorioMensal *self)
     return self->mes_num;
 }
 
+/* item_relatorio_mensal_add()
+ * Esta função soma os valores já armazenados em `self` com os valores de `other`
+ * e emite um sinal "notify" quando algum dos valores de fato mudou.
+ * O sinal é importante por que é capturado pela columnviewcolumn, que atualiza
+ * o valor daquela propriedade na tabela.
+ */
 void
 item_relatorio_mensal_add(ItemRelatorioMensal *self, const ItemRelatorioMensal *other)
 {
     g_return_if_fail(self->origem == other->origem && self->mes_num == other->mes_num);
 
-    self->gu_faixa_1 += other->gu_faixa_1;
-    self->gu_faixa_2 += other->gu_faixa_2;
-    self->gu_faixa_3 += other->gu_faixa_3;
-    self->gu_extra += other->gu_extra;
+    GObject *gobj = G_OBJECT(self);
+
+    self->cargas += other->cargas;
+    g_object_notify_by_pspec(gobj, item_relatorio_mensal_properties[CARGAS]);
+
+    // `other` codidifica os valores de um único carregamento,
+    // por isso, ele pode estar nas faixas 1, 2, 3 ou extra.
+    // Nunca em mais de uma.
+    if (other->gu_faixa_1)
+    {
+        self->gu_faixa_1 += other->gu_faixa_1;
+        g_object_notify_by_pspec(gobj, item_relatorio_mensal_properties[GU_FAIXA_1]);
+    }
+    else if (other->gu_faixa_2)
+    {
+        self->gu_faixa_2 += other->gu_faixa_2;
+        g_object_notify_by_pspec(gobj, item_relatorio_mensal_properties[GU_FAIXA_2]);
+    }
+    else if (other->gu_faixa_3)
+    {
+        self->gu_faixa_3 += other->gu_faixa_3;
+        g_object_notify_by_pspec(gobj, item_relatorio_mensal_properties[GU_FAIXA_3]);
+    }
+    else
+    {
+        self->gu_extra += other->gu_extra;
+        g_object_notify_by_pspec(gobj, item_relatorio_mensal_properties[GU_EXTRA]);
+    }
 }
 
 static void
@@ -161,7 +191,7 @@ item_relatorio_mensal_class_init(ItemRelatorioMensalClass *cls)
         item_relatorio_mensal_properties[prop] =
             g_param_spec_int(
                 prop_names[prop], NULL, NULL, 0, G_MAXINT32, 0,
-                G_PARAM_READABLE | G_PARAM_STATIC_STRINGS
+                G_PARAM_READABLE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY
             );
     }
 
