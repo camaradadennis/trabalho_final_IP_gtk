@@ -62,9 +62,11 @@ set_text_buffer_from_nova(NovoCarregamento *self)
         self->carga->tp_transgenico? "Sim" : "Não"
     );
 
-    int amostras_por_faixa[get_n_faixas_gu()][self->n_amostras + 1];
+    unsigned n_faixas_gu = get_n_faixas_gu() + 1; // permitir uma faixa extra
 
-    for (int i = 0; i < get_n_faixas_gu(); ++i)
+    int amostras_por_faixa[n_faixas_gu][self->n_amostras + 1];
+
+    for (int i = 0; i < n_faixas_gu; ++i)
         amostras_por_faixa[i][0] = 0;
 
     for (int i = 0; i < self->n_amostras; ++i)
@@ -77,7 +79,7 @@ set_text_buffer_from_nova(NovoCarregamento *self)
             self->amostras[i].ident;
     }
 
-    for (int i = 0; i < get_n_faixas_gu(); ++i)
+    for (int i = 0; i < n_faixas_gu; ++i)
     {
         g_string_append_printf(str_buf,
             "Umidade: %s                                Quant.: %03d\n"

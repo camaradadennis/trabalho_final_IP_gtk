@@ -111,6 +111,8 @@ item_relatorio_geral_fit(ItemRelatorioGeral *self, const Carga *carga)
     self->origem = carga->origem;
     self->peso_total += carga->peso_bruto_t;
 
+    // o relatório geral só permite 3 faixas gu no momento
+    // uma faixa extra ainda vai ter o peso geral computado.
     switch (faixa_gu)
     {
         case 0:
@@ -134,12 +136,6 @@ item_relatorio_geral_fit(ItemRelatorioGeral *self, const Carga *carga)
             else
                 self->fx3_tp_ntrans += peso_limpo;
             break;
-        default:
-            // o relatório geral só permite 3 faixas gu no momento
-            // o peso total deste item vai a zero para não ser computado
-            // no relatório.
-            self->peso_total = 0;
-            return;
     }
 }
 

@@ -11,8 +11,7 @@ struct FaixaGU {
 static const struct FaixaGU faixas_gu[] = {
     {"Faixa 1", 0, 8.5},
     {"Faixa 2", 8.5, 15},
-    {"Faixa 3", 15, 25},
-    {"GU Extra", 25, 100}
+    {"Faixa 3", 15, 25}
 };
 
 static const Carga carga_valores_min = {
@@ -69,8 +68,8 @@ get_faixa_gu(float umidade)
 const char *
 get_faixa_gu_nome(unsigned i)
 {
-    if (i > get_n_faixas_gu())
-        return NULL;
+    if (i >= get_n_faixas_gu())
+        return "GU Extra";
 
     return faixas_gu[i].nome;
 }
