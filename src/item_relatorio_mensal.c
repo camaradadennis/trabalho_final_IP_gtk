@@ -22,7 +22,6 @@ struct _ItemRelatorioMensal {
 
     int mes_num;
     int origem;
-    int cargas;
     int gu_faixa_1;
     int gu_faixa_2;
     int gu_faixa_3;
@@ -69,9 +68,6 @@ item_relatorio_mensal_add(ItemRelatorioMensal *self, const ItemRelatorioMensal *
 
     GObject *gobj = G_OBJECT(self);
 
-    self->cargas += other->cargas;
-    g_object_notify_by_pspec(gobj, item_relatorio_mensal_properties[CARGAS]);
-
     // `other` codidifica os valores de um único carregamento,
     // por isso, ele pode estar nas faixas 1, 2, 3 ou extra.
     // Nunca em mais de uma.
@@ -95,6 +91,8 @@ item_relatorio_mensal_add(ItemRelatorioMensal *self, const ItemRelatorioMensal *
         self->gu_extra += other->gu_extra;
         g_object_notify_by_pspec(gobj, item_relatorio_mensal_properties[GU_EXTRA]);
     }
+
+    g_object_notify_by_pspec(gobj, item_relatorio_mensal_properties[CARGAS]);
 }
 
 static void
@@ -104,7 +102,6 @@ item_relatorio_mensal_fit(ItemRelatorioMensal *self, const Carga *carga)
 
     self->origem = carga->origem;
     self->mes_num = carga->mes_receb;
-    ++self->cargas;
 
     switch (faixa_gu)
     {
@@ -117,11 +114,8 @@ item_relatorio_mensal_fit(ItemRelatorioMensal *self, const Carga *carga)
         case 2:
             ++self->gu_faixa_3;
             break;
-        case 3:
-            ++self->gu_extra;
-            break;
         default:
-            g_warning("Faixa GU inválida: %d", faixa_gu);
+            ++self->gu_extra;
     }
 }
 
@@ -142,7 +136,10 @@ item_relatorio_mensal_get_property(GObject *obj,
             g_value_set_int(val, self->origem);
             break;
         case CARGAS:
-            g_value_set_int(val, self->cargas);
+            g_value_set_int(val,
+                self->gu_faixa_1 + self->gu_faixa_2
+                + self->gu_faixa_3 + self->gu_extra
+            );
             break;
         case GU_FAIXA_1:
             g_value_set_int(val, self->gu_faixa_1);
